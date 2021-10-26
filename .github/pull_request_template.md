@@ -8,5 +8,4 @@
 
 ## Notes
 
-<!-- Link the Asana task here -->
-* [Asana Task]()
+<!-- Additional notes here -->
