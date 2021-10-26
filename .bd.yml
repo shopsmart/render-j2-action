@@ -1,7 +1,7 @@
 ---
 
 name: render-j2-action
-type: application
+type: gh-action
 team: # Replace this
 tags:
   # key: value

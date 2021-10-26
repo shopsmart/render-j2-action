@@ -1,6 +1,7 @@
 ---
 repository:
   name: render-j2-action
+  description: Render a jinja template via j2cli in a Github Action
   private: true
   has_issues: true
   default_branch: main
