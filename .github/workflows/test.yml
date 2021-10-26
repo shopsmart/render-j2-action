@@ -1,0 +1,45 @@
+---
+
+name: 'Run tests'
+
+on:
+  pull_request:
+    branches:
+      - main
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  test:
+    name: 'Run tests'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: brew install bats-core
+      - run: bats -r tests/*.bats
+
+  # TODO: Implement this to see the action "in action" :giggle: Pun not intended
+  # integration:
+  #   name: 'Run integration test'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+
+  #     - uses: ./
+  #       with:
+  #         template: fixtures/template.yml.j2
+  #         data: fixtures/data.yml.j2
+  #         format: yaml
+  #         undefined: 'false'
+  #         customize: fixtures/customize.py
+  #         filters: fixtures/filters.py
+  #         tests: fixtures/tests.py
+  #         output: actual.yml
+
+  #     - name: 'Compare expected with actual'
+  #       run: set -e; diff -yq actual.yml fixtures/expected.yml
+
+  #     - uses: actions/upload-artifact@v1
+  #       if: ${{ failure() }}
