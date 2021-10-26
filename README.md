@@ -1,2 +1,0 @@
-# base-template
-Base template

@@ -1,7 +1,7 @@
 ---
 
-name: base-template
-type: template
+name: render-j2-action
+type: application
 team: # Replace this
 tags:
   # key: value

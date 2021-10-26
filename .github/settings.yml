@@ -1,7 +1,6 @@
 ---
 repository:
-  name: base-template
-  description: Base template
+  name: render-j2-action
   private: true
   has_issues: true
   default_branch: main
