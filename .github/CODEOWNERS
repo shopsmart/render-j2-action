@@ -1,4 +1,6 @@
-.github/settings.yml  @shopsmart/tech-ops-team
+# Everything must be approved through the techops team...for now
+*                     @shopsmart/tech-ops
 
-# Uncomment and set your team to include the team on all PRs
-# *       @shopsmart/<team-name>
+# Protect settings
+.github/settings.yml  @shopsmart/tech-ops
+.github/CODEOWNERS    @shopsmart/tech-ops

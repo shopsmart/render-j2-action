@@ -2,6 +2,6 @@
 
 name: render-j2-action
 type: gh-action
-team: # Replace this
+team: techops
 tags:
-  # key: value
+  language: bash
