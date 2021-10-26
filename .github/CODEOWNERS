@@ -1,0 +1,4 @@
+.github/settings.yml  @shopsmart/tech-ops-team
+
+# Uncomment and set your team to include the team on all PRs
+# *       @shopsmart/<team-name>

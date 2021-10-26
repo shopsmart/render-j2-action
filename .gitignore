@@ -1,0 +1,44 @@
+# Direnv
+.direnv/
+
+# Environment variables
+.env
+
+# Docker Storage
+.docker/
+
+# Common build directories
+build/
+dist/
+out/
+tmp/
+
+*.gz
+*.bak
+*.log
+*.tar
+*.tmp
+*.tgz
+*.zip
+*.deb
+*.rpm
+*.pkg
+
+##
+# OS Files
+##
+
+# Mac OS
+.DS_Store
+._*
+.Trashes/
+
+# Linux
+*~
+*.swp
+
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk

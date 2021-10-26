@@ -1,0 +1,7 @@
+---
+
+name: base-template
+type: template
+team: # Replace this
+tags:
+  # key: value
