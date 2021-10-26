@@ -1,3 +1,9 @@
+# Node modules for doc generation
+node_modules/
+
+# Virtual environment for requirements
+venv/
+
 # Direnv
 .direnv/
 

@@ -15,3 +15,11 @@ repos:
   - id: no-commit-to-branch
     args: [--branch, main]
   - id: trailing-whitespace
+
+- repo: local
+  hooks:
+  - id: generate-docs
+    name: generate_docs
+    entry: npm run build
+    language: system
+    files: action.yml
