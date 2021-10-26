@@ -25,7 +25,12 @@ branches:
         dismiss_stale_reviews: false
         require_code_owner_reviews: true
         dismissal_restrictions: {}
-      required_status_checks: null
+      required_status_checks:
+        strict: false
+        contexts: []
       enforce_admins: false
       required_linear_history: true
-      restrictions: null
+      restrictions:
+        users: []
+        teams: []
+        apps: []
