@@ -57,3 +57,13 @@ runs:
       shell: bash
     - run: $GITHUB_ACTION_PATH/render.sh
       shell: bash
+      env:
+        TEMPLATE: ${{ inputs.template }}
+        DATA: ${{ inputs.data }}
+        FORMAT: ${{ inputs.format }}
+        ENV_VARS: ${{ inputs.env_vars }}
+        FILTERS: ${{ inputs.filters }}
+        TESTS: ${{ inputs.tests }}
+        CUSTOMIZE: ${{ inputs.customize }}
+        UNDEFINED: ${{ inputs.undefined }}
+        OUTPUT: ${{ inputs.output }}

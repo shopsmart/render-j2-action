@@ -3,16 +3,6 @@
 function render() {
   set -exo pipefail
 
-  local TEMPLATE="$INPUT_TEMPLATE"
-  local DATA="$INPUT_DATA"
-  local FORMAT="$INPUT_FORMAT"
-  local ENV_VARS="$INPUT_ENV_VARS"
-  local FILTERS="$INPUT_FILTERS"
-  local TESTS="$INPUT_TESTS"
-  local CUSTOMIZE="$INPUT_CUSTOMIZE"
-  local UNDEFINED="$INPUT_UNDEFINED"
-  local OUTPUT="$INPUT_OUTPUT"
-
   # Validation
 
   [ -n "$TEMPLATE" ] || {
