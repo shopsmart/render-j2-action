@@ -1,6 +1,6 @@
 ---
 
-name: 'Run tests'
+name: 'Validate pull request'
 
 on:
   pull_request:
@@ -12,6 +12,20 @@ defaults:
     shell: bash
 
 jobs:
+  pre-commit:
+    name: 'Pre-commit check'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v2
+
+      - uses: pre-commit/action@v2.0.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
   test:
     name: 'Run tests'
     runs-on: ubuntu-latest
