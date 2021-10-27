@@ -76,8 +76,6 @@ function render() {
 }
 
 if [ "${BASH_SOURCE[0]}" = "$0" ]; then
-  set -x
-
   render
   exit $?
 fi
