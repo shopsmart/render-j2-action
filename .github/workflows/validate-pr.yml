@@ -1,0 +1,59 @@
+---
+
+name: 'Validate pull request'
+
+on:
+  pull_request:
+    branches:
+      - main
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  pre-commit:
+    name: 'Pre-commit check'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v2
+
+      - run: npm install
+
+      - uses: pre-commit/action@v2.0.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  test:
+    name: 'Run tests'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: brew install bats-core
+      - run: bats -r tests/*.bats
+
+  integration:
+    name: 'Run integration test'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./
+        with:
+          template: fixtures/template.yml.j2
+          data: fixtures/data.yml
+          format: yaml
+          undefined: 'true'
+          customize: fixtures/customize.py
+          filters: fixtures/filters.py
+          tests: fixtures/tests.py
+          output: actual.yml
+          env_vars: |
+            FOOBAR=baz
+
+      - name: 'Compare expected with actual'
+        run: set -e; diff -yw actual.yml fixtures/expected.yml

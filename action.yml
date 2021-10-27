@@ -1,0 +1,51 @@
+name: 'Render J2 Template'
+description: 'Renders a J2 Template'
+inputs:
+  template:
+    description: 'The path to the template file to render'
+    required: true
+  data:
+    description: 'The path to the file with data to pass to the render'
+    required: false
+    default: ''
+  format:
+    description: 'The format the data file will be in'
+    required: false
+    default: ''
+  env_vars:
+    description: |
+      The environment variables to pass to the render.  Each environment
+      variable should be in format VAR=VAL with one on each line.
+
+      Example:
+        env_vars: |
+          FOO=bar
+          BAR=baz
+    required: false
+    default: ''
+  filters:
+    description: 'Load custom Jinja2 filters from a Python file: all top-level functions are imported.'
+    required: false
+    default: ''
+  tests:
+    description: 'Load custom Jinja2 tests from a Python file.'
+    required: false
+    default: ''
+  customize:
+    description: 'A Python file that implements hooks to fine-tune the j2cli behavior'
+    required: false
+    default: ''
+  undefined:
+    description: 'If true, undefined variables will be used in templates (no error will be raised)'
+    required: false
+    default: 'false'
+  output:
+    description: 'The name of the output file to write rendered contents to'
+    required: false
+    default: output
+outputs:
+  file:
+    description: 'The file the rendered content was written to'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'

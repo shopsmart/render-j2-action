@@ -1,0 +1,27 @@
+{
+  "name": "render-j2-action",
+  "version": "1.0.0",
+  "description": "Render a jinja template via j2cli in a Github Action.",
+  "main": "misc/generate-docs.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "node misc/generate-docs.js",
+    "test": "bats -r tests/*.bats"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shopsmart/render-j2-action.git"
+  },
+  "author": "Shop Smart, LLC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shopsmart/render-j2-action/issues"
+  },
+  "homepage": "https://github.com/shopsmart/render-j2-action#readme",
+  "dependencies": {
+    "bats": "^1.5.0",
+    "js-yaml": "^4.1.0"
+  }
+}

@@ -8,10 +8,16 @@ repos:
   - id: check-merge-conflict
   - id: check-symlinks
   - id: check-yaml
-  - id: detect-aws-credentials
-  - id: detect-private-key
   - id: end-of-file-fixer
   - id: fix-byte-order-marker
   - id: no-commit-to-branch
     args: [--branch, main]
   - id: trailing-whitespace
+
+- repo: local
+  hooks:
+  - id: generate-docs
+    name: generate_docs
+    entry: npm run build
+    language: system
+    files: action.yml

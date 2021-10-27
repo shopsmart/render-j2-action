@@ -1,0 +1,8 @@
+---
+
+message: {{ message }}
+foo: {{ foo }}
+bar: {{ foo | translate }}
+baz: {{ env('FOOBAR') }}
+foobar: {% if "foo" is foobar %}foo{% endif %}
+empty: "{{ nothere }}"
