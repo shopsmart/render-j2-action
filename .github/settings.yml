@@ -28,9 +28,9 @@ branches:
       required_status_checks:
         strict: false
         contexts:
-          - Validate pull request / Pre-commit check
-          - Validate pull request / Run tests
-          - Validate pull request / Run integration test
+          - Pre-commit check
+          - Run tests
+          - Run integration test
       enforce_admins: false
       required_linear_history: true
       restrictions:
