@@ -1,0 +1,8 @@
+---
+
+message: hello world
+foo: bar
+bar: bar
+baz: baz
+foobar: foo
+empty: ""

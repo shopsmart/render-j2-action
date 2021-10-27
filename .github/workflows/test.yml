@@ -20,26 +20,24 @@ jobs:
       - run: brew install bats-core
       - run: bats -r tests/*.bats
 
-  # TODO: Implement this to see the action "in action" :giggle: Pun not intended
-  # integration:
-  #   name: 'Run integration test'
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
+  integration:
+    name: 'Run integration test'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
 
-  #     - uses: ./
-  #       with:
-  #         template: fixtures/template.yml.j2
-  #         data: fixtures/data.yml.j2
-  #         format: yaml
-  #         undefined: 'false'
-  #         customize: fixtures/customize.py
-  #         filters: fixtures/filters.py
-  #         tests: fixtures/tests.py
-  #         output: actual.yml
+      - uses: ./
+        with:
+          template: fixtures/template.yml.j2
+          data: fixtures/data.yml
+          format: yaml
+          undefined: 'true'
+          customize: fixtures/customize.py
+          filters: fixtures/filters.py
+          tests: fixtures/tests.py
+          output: actual.yml
+          env_vars: |
+            FOOBAR=baz
 
-  #     - name: 'Compare expected with actual'
-  #       run: set -e; diff -yq actual.yml fixtures/expected.yml
-
-  #     - uses: actions/upload-artifact@v1
-  #       if: ${{ failure() }}
+      - name: 'Compare expected with actual'
+        run: set -e; diff -yq actual.yml fixtures/expected.yml

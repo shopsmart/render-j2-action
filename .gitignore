@@ -4,6 +4,9 @@ node_modules/
 # Virtual environment for requirements
 venv/
 
+# Pycache from j2
+__pycache__/
+
 # Direnv
 .direnv/
 
