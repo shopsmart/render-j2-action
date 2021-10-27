@@ -2,7 +2,7 @@
 
 message: hello world
 foo: bar
-bar: bar
+bar: foo
 baz: baz
 foobar: foo
 empty: ""
