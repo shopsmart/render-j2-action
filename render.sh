@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 function render() {
-  set -eo pipefail
+  set -exo pipefail
 
   local TEMPLATE="$INPUT_TEMPLATE"
   local DATA="$INPUT_DATA"
