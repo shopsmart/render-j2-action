@@ -47,5 +47,11 @@ outputs:
   file:
     description: 'The file the rendered content was written to'
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python_version: 3.x
+    - run: pip install -r requirements.txt
+    - run: $GITHUB_ACTION_PATH/render.sh
