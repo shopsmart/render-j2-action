@@ -2,7 +2,7 @@
 repository:
   name: render-j2-action
   description: Render a jinja template via j2cli in a Github Action
-  private: true
+  private: false
   has_issues: true
   default_branch: main
   allow_squash_merge: true
@@ -28,9 +28,9 @@ branches:
       required_status_checks:
         strict: false
         contexts:
-          - Validate pull request / Pre-commit check
-          - Validate pull request / Run tests
-          - Validate pull request / Run integration test
+          - Pre-commit check
+          - Run tests
+          - Run integration test
       enforce_admins: false
       required_linear_history: true
       restrictions:
