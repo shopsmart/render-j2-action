@@ -58,6 +58,8 @@ function render() {
       env_var="$(echo "${env_var?}" | xargs)"
       var="${env_var%=*}"
 
+      [ -n "${env_var?}" ] || continue
+
       # Export for the j2 cli
       export "${env_var?}"
 
