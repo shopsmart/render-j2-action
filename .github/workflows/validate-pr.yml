@@ -56,4 +56,4 @@ jobs:
             FOOBAR=baz
 
       - name: 'Compare expected with actual'
-        run: set -e; diff -yq actual.yml fixtures/expected.yml
+        run: set -e; diff -yw actual.yml fixtures/expected.yml
