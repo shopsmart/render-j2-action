@@ -46,3 +46,6 @@ inputs:
 outputs:
   file:
     description: 'The file the rendered content was written to'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
