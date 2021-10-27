@@ -101,7 +101,11 @@ function updateUsage(
       }
 
       // Default
-      newReadme.push(`    # Default: ${input.default}`)
+      var def = input.default
+      if (def === '') {
+        def = "''"
+      }
+      newReadme.push(`    # Default: ${def}`)
     }
 
     // Input name

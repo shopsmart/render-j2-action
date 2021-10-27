@@ -12,11 +12,11 @@ Renders Jinja2 Templates via the [J2 cli](https://github.com/kolypto/j2cli).
     template: ''
 
     # The path to the file with data to pass to the render
-    # Default:
+    # Default: ''
     data: ''
 
     # The format the data file will be in
-    # Default:
+    # Default: ''
     format: ''
 
     # The environment variables to pass to the render. Each environment
@@ -27,20 +27,20 @@ Renders Jinja2 Templates via the [J2 cli](https://github.com/kolypto/j2cli).
     #  FOO=bar
     #  BAR=baz
     #
-    # Default:
+    # Default: ''
     env_vars: ''
 
     # Load custom Jinja2 filters from a Python file: all top-level functions are
     # imported.
-    # Default:
+    # Default: ''
     filters: ''
 
     # Load custom Jinja2 tests from a Python file.
-    # Default:
+    # Default: ''
     tests: ''
 
     # A Python file that implements hooks to fine-tune the j2cli behavior
-    # Default:
+    # Default: ''
     customize: ''
 
     # If true, undefined variables will be used in templates (no error will be raised)

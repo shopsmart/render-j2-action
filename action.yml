@@ -55,7 +55,7 @@ steps:
   steps:
     - uses: actions/setup-python@v2
       with:
-        python-version: ${{ inputs.python_version }}
+        python-version: $INPUT_PYTHON_VERSION
     - run: pip install -r $GITHUB_ACTION_PATH/requirements.txt
     - run: $GITHUB_ACTION_PATH/render.sh
       shell: bash
