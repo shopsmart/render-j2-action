@@ -50,9 +50,5 @@ Renders Jinja2 Templates via the [J2 cli](https://github.com/kolypto/j2cli).
     # The name of the output file to write rendered contents to
     # Default: output
     output: ''
-
-    # The python version to use
-    # Default: 3.x
-    python_version: ''
 ```
 <!-- end usage -->

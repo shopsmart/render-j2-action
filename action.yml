@@ -43,19 +43,6 @@ inputs:
     description: 'The name of the output file to write rendered contents to'
     required: false
     default: output
-  python_version:
-    description: 'The python version to use'
-    required: false
-    default: '3.x'
 outputs:
   file:
     description: 'The file the rendered content was written to'
-steps:
-  using: "composite"
-  steps:
-    - uses: actions/setup-python@v2
-      with:
-        python-version: $INPUT_PYTHON_VERSION
-    - run: pip install -r $GITHUB_ACTION_PATH/requirements.txt
-    - run: $GITHUB_ACTION_PATH/render.sh
-      shell: bash

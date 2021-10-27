@@ -27,7 +27,10 @@ branches:
         dismissal_restrictions: {}
       required_status_checks:
         strict: false
-        contexts: []
+        contexts:
+          - Validate pull request / Pre-commit check
+          - Validate pull request / Run tests
+          - Validate pull request / Run integration test
       enforce_admins: false
       required_linear_history: true
       restrictions:
