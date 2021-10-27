@@ -17,13 +17,13 @@ function setup() {
   export PATH="$BATS_TEST_TMPDIR/bin:$PATH"
 
   # Template is required (per action.yml)
-  INPUT_TEMPLATE="$BATS_TEST_TMPDIR/template.j2"
-  touch "$INPUT_TEMPLATE"
-  export INPUT_TEMPLATE
+  TEMPLATE="$BATS_TEST_TMPDIR/template.j2"
+  touch "$TEMPLATE"
+  export TEMPLATE
 
   # Output has a default (per action.yml)
-  INPUT_OUTPUT="$BATS_TEST_TMPDIR/output.yml"
-  export INPUT_OUTPUT
+  OUTPUT="$BATS_TEST_TMPDIR/output.yml"
+  export OUTPUT
 
   # Undefined defaults to false (per action.yml), but empty also works
 }
@@ -33,7 +33,7 @@ function teardown() {
 }
 
 @test "it should error out if template is empty" {
-  unset INPUT_TEMPLATE
+  unset TEMPLATE
 
   run render
 
@@ -41,7 +41,7 @@ function teardown() {
 }
 
 @test "it should error out if template is not a file" {
-  rm -f "$INPUT_TEMPLATE"
+  rm -f "$TEMPLATE"
 
   run render
 
@@ -49,7 +49,7 @@ function teardown() {
 }
 
 @test "it should error out if data is not a file" {
-  export INPUT_DATA="$BATS_TEST_TMPDIR/data.yml"
+  export DATA="$BATS_TEST_TMPDIR/data.yml"
 
   run render
 
@@ -57,7 +57,7 @@ function teardown() {
 }
 
 @test "it should error out if filters is not a file" {
-  export INPUT_FILTERS="$BATS_TEST_TMPDIR/filters.py"
+  export FILTERS="$BATS_TEST_TMPDIR/filters.py"
 
   run render
 
@@ -65,7 +65,7 @@ function teardown() {
 }
 
 @test "it should error out if tests is not a file" {
-  export INPUT_TESTS="$BATS_TEST_TMPDIR/tests.py"
+  export TESTS="$BATS_TEST_TMPDIR/tests.py"
 
   run render
 
@@ -73,7 +73,7 @@ function teardown() {
 }
 
 @test "it should error out if customize is not a file" {
-  export INPUT_CUSTOMIZE="$BATS_TEST_TMPDIR/customize.py"
+  export CUSTOMIZE="$BATS_TEST_TMPDIR/customize.py"
 
   run render
 
@@ -81,7 +81,7 @@ function teardown() {
 }
 
 @test "it should error out if undefined is not a boolean" {
-  export INPUT_UNDEFINED="notaboolean"
+  export UNDEFINED="notaboolean"
 
   run render
 
@@ -89,7 +89,7 @@ function teardown() {
 }
 
 @test "it should not pass the undefined flag if undefined is false" {
-  export INPUT_UNDEFINED="false"
+  export UNDEFINED="false"
 
   run render
 
@@ -101,7 +101,7 @@ function teardown() {
 }
 
 @test "it should export environment variables to the cli" {
-  export INPUT_ENV_VARS='FOO=bar
+  export ENV_VARS='FOO=bar
   BAR=baz
   BAZ=quo'
 
@@ -118,26 +118,26 @@ function teardown() {
 }
 
 @test "it should pass all arguments to the j2 cli" {
-  export INPUT_FILTERS="$BATS_TEST_TMPDIR/filters.py"
-  export INPUT_TESTS="$BATS_TEST_TMPDIR/tests.py"
-  export INPUT_CUSTOMIZE="$BATS_TEST_TMPDIR/customize.py"
-  export INPUT_DATA="$BATS_TEST_TMPDIR/data.yml"
+  export FILTERS="$BATS_TEST_TMPDIR/filters.py"
+  export TESTS="$BATS_TEST_TMPDIR/tests.py"
+  export CUSTOMIZE="$BATS_TEST_TMPDIR/customize.py"
+  export DATA="$BATS_TEST_TMPDIR/data.yml"
 
-  touch "$INPUT_FILTERS"
-  touch "$INPUT_TESTS"
-  touch "$INPUT_CUSTOMIZE"
-  touch "$INPUT_DATA"
+  touch "$FILTERS"
+  touch "$TESTS"
+  touch "$CUSTOMIZE"
+  touch "$DATA"
 
-  export INPUT_UNDEFINED=true
-  export INPUT_ENV_VARS='FOO=foo'
+  export UNDEFINED=true
+  export ENV_VARS='FOO=foo'
 
   run render
 
   [ $status -eq 0 ]
-  grep -q -- "--filters $INPUT_FILTERS" "$J2_CMD_FILE"
-  grep -q -- "--tests $INPUT_TESTS" "$J2_CMD_FILE"
-  grep -q -- "--customize $INPUT_CUSTOMIZE" "$J2_CMD_FILE"
+  grep -q -- "--filters $FILTERS" "$J2_CMD_FILE"
+  grep -q -- "--tests $TESTS" "$J2_CMD_FILE"
+  grep -q -- "--customize $CUSTOMIZE" "$J2_CMD_FILE"
   grep -q -- "-e FOO" "$J2_CMD_FILE"
   grep -q -- "--undefined" "$J2_CMD_FILE"
-  grep -qE "$INPUT_TEMPLATE $INPUT_DATA\$" "$J2_CMD_FILE"
+  grep -qE "$TEMPLATE $DATA\$" "$J2_CMD_FILE"
 }
