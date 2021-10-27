@@ -54,4 +54,6 @@ runs:
       with:
         python_version: 3.x
     - run: pip install -r requirements.txt
+      shell: bash
     - run: $GITHUB_ACTION_PATH/render.sh
+      shell: bash
