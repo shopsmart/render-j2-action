@@ -53,7 +53,7 @@ runs:
     - uses: actions/setup-python@v2
       with:
         python-version: 3.x
-    - run: pip install -r requirements.txt
+    - run: pip install -r $GITHUB_ACTION_PATH/requirements.txt
       shell: bash
     - run: $GITHUB_ACTION_PATH/render.sh
       shell: bash
