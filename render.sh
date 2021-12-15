@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 function render() {
-  set -exo pipefail
+  set -eo pipefail
 
   # Validation
 
