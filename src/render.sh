@@ -29,6 +29,8 @@ function render() {
   function set_output() {
     if [ -f "$OUTPUT" ]; then
       echo "::set-output name=file::$OUTPUT"
+      echo -n "::set-output name=content::"
+      cat "$OUTPUT"
     fi
   }
   trap set_output EXIT

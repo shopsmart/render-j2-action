@@ -47,23 +47,15 @@ outputs:
   file:
     description: 'The file the rendered content was written to'
 runs:
-  using: 'composite'
-  steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
-      with:
-        python-version: 3.x
-    - run: pip install -r $GITHUB_ACTION_PATH/requirements.txt
-      shell: bash
-    - run: $GITHUB_ACTION_PATH/render.sh
-      shell: bash
-      env:
-        TEMPLATE: ${{ inputs.template }}
-        DATA: ${{ inputs.data }}
-        FORMAT: ${{ inputs.format }}
-        ENV_VARS: ${{ inputs.env_vars }}
-        FILTERS: ${{ inputs.filters }}
-        TESTS: ${{ inputs.tests }}
-        CUSTOMIZE: ${{ inputs.customize }}
-        UNDEFINED: ${{ inputs.undefined }}
-        OUTPUT: ${{ inputs.output }}
+  using: 'docker'
+  image: 'docker/Dockerfile'
+  env:
+    TEMPLATE: ${{ inputs.template }}
+    DATA: ${{ inputs.data }}
+    FORMAT: ${{ inputs.format }}
+    ENV_VARS: ${{ inputs.env_vars }}
+    FILTERS: ${{ inputs.filters }}
+    TESTS: ${{ inputs.tests }}
+    CUSTOMIZE: ${{ inputs.customize }}
+    UNDEFINED: ${{ inputs.undefined }}
+    OUTPUT: ${{ inputs.output }}
