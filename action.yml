@@ -48,7 +48,7 @@ outputs:
     description: 'The file the rendered content was written to'
 runs:
   using: 'docker'
-  image: 'docker/Dockerfile'
+  image: 'Dockerfile'
   env:
     TEMPLATE: ${{ inputs.template }}
     DATA: ${{ inputs.data }}
