@@ -1,5 +1,9 @@
 FROM python:3.10.1-alpine3.15
 
+RUN apk add --update-cache \
+  bash \
+  && rm -rf /var/cache/apk/*
+
 WORKDIR /opt/app
 
 COPY requirements.txt .
