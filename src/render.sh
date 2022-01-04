@@ -32,6 +32,8 @@ function render() {
 
       CONTENT="$(< "$OUTPUT")"
 
+      echo "[DEBUG] Condensing $(wc -l "$OUTPUT") lines" >&2
+
       # Multiline variables need special treatment
       # @see https://trstringer.com/github-actions-multiline-strings/
       CONTENT="${CONTENT//'%'/'%25'}"
@@ -40,6 +42,8 @@ function render() {
 
       echo -n "::set-output name=content::$CONTENT"
     fi
+
+    echo "[DEBUG] Output file not found, skipping outputs" >&2
   }
   trap set_output EXIT
 
