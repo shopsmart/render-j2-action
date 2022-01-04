@@ -76,7 +76,7 @@ function render() {
 
   which j2
   echo "[DEBUG] ${COMMAND[*]}" >&2
-  exec "${COMMAND[@]}"
+  "${COMMAND[@]}"
 }
 
 if [ "${BASH_SOURCE[0]}" = "$0" ]; then
