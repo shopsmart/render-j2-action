@@ -29,8 +29,16 @@ function render() {
   function set_output() {
     if [ -f "$OUTPUT" ]; then
       echo "::set-output name=file::$OUTPUT"
-      echo -n "::set-output name=content::"
-      cat "$OUTPUT"
+
+      CONTENT="$(< "$OUTPUT")"
+
+      # Multiline variables need special treatment
+      # @see https://trstringer.com/github-actions-multiline-strings/
+      CONTENT="${CONTENT//'%'/'%25'}"
+      CONTENT="${CONTENT//$'\n'/'%0A'}"
+      CONTENT="${CONTENT//$'\r'/'%0D'}"
+
+      echo -n "::set-output name=content::$CONTENT"
     fi
   }
   trap set_output EXIT
