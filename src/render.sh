@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 function render() {
-  set -exo pipefail
+  set -eo pipefail
 
   # Validation
 
@@ -29,7 +29,21 @@ function render() {
   function set_output() {
     if [ -f "$OUTPUT" ]; then
       echo "::set-output name=file::$OUTPUT"
+
+      CONTENT="$(< "$OUTPUT")"
+
+      echo "[DEBUG] Condensing $(wc -l "$OUTPUT") lines" >&2
+
+      # Multiline variables need special treatment
+      # @see https://trstringer.com/github-actions-multiline-strings/
+      CONTENT="${CONTENT//'%'/'%25'}"
+      CONTENT="${CONTENT//$'\n'/'%0A'}"
+      CONTENT="${CONTENT//$'\r'/'%0D'}"
+
+      echo -n "::set-output name=content::$CONTENT"
     fi
+
+    echo "[DEBUG] Output file not found, skipping outputs" >&2
   }
   trap set_output EXIT
 
@@ -62,7 +76,7 @@ function render() {
 
   which j2
   echo "[DEBUG] ${COMMAND[*]}" >&2
-  exec "${COMMAND[@]}"
+  "${COMMAND[@]}"
 }
 
 if [ "${BASH_SOURCE[0]}" = "$0" ]; then

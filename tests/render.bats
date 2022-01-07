@@ -1,7 +1,7 @@
 #!/usr/bin/env bats
 
 # shellcheck source=../render.sh
-source "$BATS_TEST_DIRNAME/../render.sh"
+source "$BATS_TEST_DIRNAME/../src/render.sh"
 
 function setup() {
   export J2_CMD_FILE="$BATS_TEST_TMPDIR/j2.cmd"
