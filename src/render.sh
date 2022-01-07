@@ -40,7 +40,7 @@ function render() {
       CONTENT="${CONTENT//$'\n'/'%0A'}"
       CONTENT="${CONTENT//$'\r'/'%0D'}"
 
-      echo -n "::set-output name=content::$CONTENT"
+      echo "::set-output name=content::$CONTENT"
     fi
 
     echo "[DEBUG] Output file not found, skipping outputs" >&2
@@ -75,6 +75,7 @@ function render() {
   [ -z "$DATA" ] || COMMAND+=("$DATA")
 
   which j2
+  j2 --version
   echo "[DEBUG] ${COMMAND[*]}" >&2
   "${COMMAND[@]}"
 }
