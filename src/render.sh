@@ -28,7 +28,7 @@ function render() {
 
   function set_output() {
     if [ -f "$OUTPUT" ]; then
-      echo "::set-output name=file::$OUTPUT"
+      echo "file=$OUTPUT" >> $GITHUB_OUTPUT
 
       CONTENT="$(< "$OUTPUT")"
 
@@ -40,7 +40,7 @@ function render() {
       CONTENT="${CONTENT//$'\n'/'%0A'}"
       CONTENT="${CONTENT//$'\r'/'%0D'}"
 
-      echo -n "::set-output name=content::$CONTENT"
+      echo -n "content=$CONTENT" >> $GITHUB_OUTPUT
     fi
 
     echo "[DEBUG] Output file not found, skipping outputs" >&2
