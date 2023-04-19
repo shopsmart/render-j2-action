@@ -9,7 +9,7 @@ function set-output() {
 
     {
       echo "debug=<<$EOF"
-      sed '2d' "$OUTPUT"
+      sed '1,2d' "$OUTPUT"
       echo "$EOF"
     } >> "$GITHUB_OUTPUT"
 
