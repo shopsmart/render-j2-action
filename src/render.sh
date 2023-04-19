@@ -13,11 +13,11 @@ function set-output() {
       echo "$EOF"
     } >> "$GITHUB_OUTPUT"
 
-    {
-      echo "content=<<$EOF"
-      cat "$OUTPUT"
-      echo "$EOF"
-    } >> "$GITHUB_OUTPUT"
+    # {
+    #   echo "content=<<$EOF"
+    #   cat "$OUTPUT"
+    #   echo "$EOF"
+    # } >> "$GITHUB_OUTPUT"
   else
     echo "[DEBUG] Output file not found, skipping outputs" >&2
   fi
