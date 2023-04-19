@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 function set-output() {
+  set -x
   if [ -f "$OUTPUT" ]; then
     echo "file=$OUTPUT" >> "$GITHUB_OUTPUT"
 
