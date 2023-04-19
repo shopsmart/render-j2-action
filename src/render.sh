@@ -12,9 +12,9 @@ function set-output() {
       cat "$OUTPUT"
       echo "$EOF"
     } >> "$GITHUB_OUTPUT"
+  else
+    echo "[DEBUG] Output file not found, skipping outputs" >&2
   fi
-
-  echo "[DEBUG] Output file not found, skipping outputs" >&2
 }
 
 function render() {
