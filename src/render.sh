@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 function set-output() {
-  set -x
   if [ -f "$OUTPUT" ]; then
     echo "file=$OUTPUT" >> "$GITHUB_OUTPUT"
 
@@ -70,6 +69,8 @@ function render() {
 
   COMMAND+=("$TEMPLATE")
   [ -z "$DATA" ] || COMMAND+=("$DATA")
+
+  set -x
 
   which j2
   echo "[DEBUG] ${COMMAND[*]}" >&2
