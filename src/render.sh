@@ -4,10 +4,15 @@ function set-output() {
   if [ -f "$OUTPUT" ]; then
     echo "file=$OUTPUT" >> "$GITHUB_OUTPUT"
 
-    echo "[DEBUG] actual.yml=$(< actual.yml)" >&2
-
     # @see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#multiline-strings
     EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+
+    {
+      echo "debug=<<$EOF"
+      sed '2d' "$OUTPUT"
+      echo "$EOF"
+    } >> "$GITHUB_OUTPUT"
+
     {
       echo "content=<<$EOF"
       cat "$OUTPUT"
