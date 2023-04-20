@@ -1,5 +1,21 @@
 #!/usr/bin/env bash
 
+function set-output() {
+  if [ -f "$OUTPUT" ]; then
+    echo "file=$OUTPUT" >> "$GITHUB_OUTPUT"
+
+    # @see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#multiline-strings
+    EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+    {
+      echo "content<<$EOF"
+      cat "$OUTPUT"
+      echo "$EOF"
+    } >> "$GITHUB_OUTPUT"
+  else
+    echo "[DEBUG] Output file not found, skipping outputs" >&2
+  fi
+}
+
 function render() {
   set -eo pipefail
 
@@ -25,27 +41,7 @@ function render() {
   }
 
   # Main
-
-  function set_output() {
-    if [ -f "$OUTPUT" ]; then
-      echo "file=$OUTPUT" >> $GITHUB_OUTPUT
-
-      CONTENT="$(< "$OUTPUT")"
-
-      echo "[DEBUG] Condensing $(wc -l "$OUTPUT") lines" >&2
-
-      # Multiline variables need special treatment
-      # @see https://trstringer.com/github-actions-multiline-strings/
-      CONTENT="${CONTENT//'%'/'%25'}"
-      CONTENT="${CONTENT//$'\n'/'%0A'}"
-      CONTENT="${CONTENT//$'\r'/'%0D'}"
-
-      echo -n "content=$CONTENT" >> $GITHUB_OUTPUT
-    fi
-
-    echo "[DEBUG] Output file not found, skipping outputs" >&2
-  }
-  trap set_output EXIT
+  trap set-output EXIT
 
   local COMMAND=(j2 -o "$OUTPUT")
 
@@ -73,6 +69,8 @@ function render() {
 
   COMMAND+=("$TEMPLATE")
   [ -z "$DATA" ] || COMMAND+=("$DATA")
+
+  set -x
 
   which j2
   echo "[DEBUG] ${COMMAND[*]}" >&2
