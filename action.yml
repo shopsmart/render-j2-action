@@ -61,7 +61,7 @@ runs:
     - name: 'Setup python'
       uses: actions/setup-python@v4
       with:
-        python-version-file: .python-version
+        python-version-file: ${{ github.action_path }}/.python-version
         cache: pip
         cache-dependency-path: ${{ github.action_path }}/requirements.txt
 
