@@ -54,6 +54,10 @@ inputs:
 outputs:
   file:
     description: 'The file the rendered content was written to'
+    value: ${{ steps.render.outputs.file }}
+  content:
+    description: 'The rendered content'
+    value: ${{ steps.render.outputs.content }}
 
 runs:
   using: 'composite'
@@ -79,6 +83,7 @@ runs:
       run: pip install -r "${{ github.action_path }}/requirements.txt"
 
     - name: 'Render'
+      id: render
       shell: bash
       run: "${{ github.action_path }}/src/render.sh"
       env:
