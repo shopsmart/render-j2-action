@@ -62,10 +62,6 @@ outputs:
 runs:
   using: 'composite'
   steps:
-    - name: 'Debug'
-      shell: bash
-      run: ls -al ${{ github.action_path }}
-
     - name: 'Setup python'
       uses: actions/setup-python@v4
       with:
