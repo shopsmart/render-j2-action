@@ -19,7 +19,9 @@ function set-output() {
 function render() {
   set -eo pipefail
 
-  [ -n "${DEBUG+x}" ] || set -x
+  if [ "${DEBUG:-false}" = 'true' ]; then
+    set -x
+  fi
 
   # Validation
 
