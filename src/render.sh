@@ -29,10 +29,10 @@ function render() {
   for var in Template Data Filters Tests Customize; do
     VAR="${var^^}"
     val="${!VAR}"
-    [ -z "$val" ] || [ -f "$val" ] || {
+    if [ -n "$val" ] && ! [ -f "$val" ]; then
       echo "[ERROR] $var file not found: $val" >&2
       return 2
-    }
+    fi
   done
 
   [ -z "$UNDEFINED" ] || [ "$UNDEFINED" = true ] || [ "$UNDEFINED" = false ] || {
