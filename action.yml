@@ -56,16 +56,29 @@ outputs:
     description: 'The file the rendered content was written to'
 
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  env:
-    TEMPLATE: ${{ inputs.template }}
-    DATA: ${{ inputs.data }}
-    FORMAT: ${{ inputs.format }}
-    ENV_VARS: ${{ inputs.env_vars }}
-    FILTERS: ${{ inputs.filters }}
-    TESTS: ${{ inputs.tests }}
-    CUSTOMIZE: ${{ inputs.customize }}
-    UNDEFINED: ${{ inputs.undefined }}
-    OUTPUT: ${{ inputs.output }}
-    DEBUG: ${{ inputs.debug }}
+  using: 'composite'
+  steps:
+    - name: 'Setup python'
+      uses: actions/setup-python@v3
+      with:
+        python-version-file: .python-version
+        cache: pip
+
+    - name: 'Install dependencies'
+      shell: bash
+      run: pip install -r "${{ github.action_path }}/requirements.txt"
+
+    - name: 'Render'
+      shell: bash
+      run: "${{ github.action_path }}/src/render.sh"
+      env:
+        TEMPLATE: ${{ inputs.template }}
+        DATA: ${{ inputs.data }}
+        FORMAT: ${{ inputs.format }}
+        ENV_VARS: ${{ inputs.env_vars }}
+        FILTERS: ${{ inputs.filters }}
+        TESTS: ${{ inputs.tests }}
+        CUSTOMIZE: ${{ inputs.customize }}
+        UNDEFINED: ${{ inputs.undefined }}
+        OUTPUT: ${{ inputs.output }}
+        DEBUG: ${{ inputs.debug }}
