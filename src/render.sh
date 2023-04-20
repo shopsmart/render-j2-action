@@ -19,6 +19,10 @@ function set-output() {
 function render() {
   set -eo pipefail
 
+  if [ "${DEBUG:-false}" = 'true' ]; then
+    set -x
+  fi
+
   # Validation
 
   [ -n "$TEMPLATE" ] || {
@@ -29,10 +33,13 @@ function render() {
   for var in Template Data Filters Tests Customize; do
     VAR="${var^^}"
     val="${!VAR}"
-    [ -z "$val" ] || [ -f "$val" ] || {
+    if [ -n "$val" ] && ! [ -f "$val" ]; then
+      whoami
+      ls -al "$(dirname "$val")"
+      ls -al "$val"
       echo "[ERROR] $var file not found: $val" >&2
       return 2
-    }
+    fi
   done
 
   [ -z "$UNDEFINED" ] || [ "$UNDEFINED" = true ] || [ "$UNDEFINED" = false ] || {
@@ -69,8 +76,6 @@ function render() {
 
   COMMAND+=("$TEMPLATE")
   [ -z "$DATA" ] || COMMAND+=("$DATA")
-
-  set -x
 
   which j2
   echo "[DEBUG] ${COMMAND[*]}" >&2

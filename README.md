@@ -50,5 +50,9 @@ Renders Jinja2 Templates via the [J2 cli](https://github.com/kolypto/j2cli).
     # The name of the output file to write rendered contents to
     # Default: output
     output: ''
+
+    # If true, sets -x in the shell command
+    # Default: false
+    debug: ''
 ```
 <!-- end usage -->

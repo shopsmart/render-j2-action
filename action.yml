@@ -1,5 +1,8 @@
+---
+
 name: 'Render J2 Template'
 description: 'Renders a J2 Template'
+
 inputs:
   template:
     description: 'The path to the template file to render'
@@ -43,19 +46,50 @@ inputs:
     description: 'The name of the output file to write rendered contents to'
     required: false
     default: output
+  debug:
+    description: 'If true, sets -x in the shell command'
+    required: false
+    default: false
+
 outputs:
   file:
     description: 'The file the rendered content was written to'
+    value: ${{ steps.render.outputs.file }}
+  content:
+    description: 'The rendered content'
+    value: ${{ steps.render.outputs.content }}
+
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  env:
-    TEMPLATE: ${{ inputs.template }}
-    DATA: ${{ inputs.data }}
-    FORMAT: ${{ inputs.format }}
-    ENV_VARS: ${{ inputs.env_vars }}
-    FILTERS: ${{ inputs.filters }}
-    TESTS: ${{ inputs.tests }}
-    CUSTOMIZE: ${{ inputs.customize }}
-    UNDEFINED: ${{ inputs.undefined }}
-    OUTPUT: ${{ inputs.output }}
+  using: 'composite'
+  steps:
+    - name: 'Setup python'
+      uses: actions/setup-python@v4
+      with:
+        python-version-file: ${{ github.action_path }}/.python-version
+
+    - name: 'Cache python dependencies'
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles(join(fromJSON('["${{ github.action_path }}", "requirements.txt"]'), '/')) }}
+        restore-keys: ${{ runner.os }}-pip-
+
+    - name: 'Install dependencies'
+      shell: bash
+      run: pip install -r "${{ github.action_path }}/requirements.txt"
+
+    - name: 'Render'
+      id: render
+      shell: bash
+      run: "${{ github.action_path }}/src/render.sh"
+      env:
+        TEMPLATE: ${{ inputs.template }}
+        DATA: ${{ inputs.data }}
+        FORMAT: ${{ inputs.format }}
+        ENV_VARS: ${{ inputs.env_vars }}
+        FILTERS: ${{ inputs.filters }}
+        TESTS: ${{ inputs.tests }}
+        CUSTOMIZE: ${{ inputs.customize }}
+        UNDEFINED: ${{ inputs.undefined }}
+        OUTPUT: ${{ inputs.output }}
+        DEBUG: ${{ inputs.debug }}
