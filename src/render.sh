@@ -7,11 +7,11 @@ function set-output() {
     # @see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#multiline-strings
     EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
 
-    {
-      echo "debug=<<$EOF"
-      sed '1,2d' "$OUTPUT"
-      echo "$EOF"
-    } >> "$GITHUB_OUTPUT"
+    # {
+      echo "debug=<<$EOF" >> "$GITHUB_OUTPUT"
+      sed '1,2d' "$OUTPUT" >> "$GITHUB_OUTPUT"
+      echo "$EOF" >> "$GITHUB_OUTPUT"
+    # } >> "$GITHUB_OUTPUT"
 
     # {
     #   echo "content=<<$EOF"
