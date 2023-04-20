@@ -6,18 +6,11 @@ function set-output() {
 
     # @see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#multiline-strings
     EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-
-    # {
-      echo "debug=<<$EOF" >> "$GITHUB_OUTPUT"
-      sed '1,2d' "$OUTPUT" >> "$GITHUB_OUTPUT"
-      echo "$EOF" >> "$GITHUB_OUTPUT"
-    # } >> "$GITHUB_OUTPUT"
-
-    # {
-    #   echo "content=<<$EOF"
-    #   cat "$OUTPUT"
-    #   echo "$EOF"
-    # } >> "$GITHUB_OUTPUT"
+    {
+      echo "content<<$EOF"
+      cat "$OUTPUT"
+      echo "$EOF"
+    } >> "$GITHUB_OUTPUT"
   else
     echo "[DEBUG] Output file not found, skipping outputs" >&2
   fi
