@@ -34,6 +34,7 @@ function render() {
     VAR="${var^^}"
     val="${!VAR}"
     if [ -n "$val" ] && ! [ -f "$val" ]; then
+      ls -al "$val"
       echo "[ERROR] $var file not found: $val" >&2
       return 2
     fi
