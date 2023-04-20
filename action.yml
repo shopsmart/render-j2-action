@@ -66,8 +66,13 @@ runs:
       uses: actions/setup-python@v4
       with:
         python-version-file: ${{ github.action_path }}/.python-version
-        cache: pip
-        cache-dependency-path: ${{ github.action_path }}/requirements.txt
+
+    - name: 'Cache python dependencies'
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles(join(fromJSON('["${{ github.action_path }}", "requirements.txt"]'), '/')) }}
+        restore-keys: ${{ runner.os }}-pip-
 
     - name: 'Install dependencies'
       shell: bash
