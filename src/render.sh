@@ -55,6 +55,7 @@ function render() {
   if [ -n "$DATA" ]; then
     local data_files=()
     while read -r file; do
+      [ -n "$file" ] || continue
       [ -f "$file" ] || {
         echo "[ERROR] Data file not found: $file" >&2
         return 2
