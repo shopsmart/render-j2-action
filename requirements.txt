@@ -2,3 +2,5 @@ j2cli==0.3.10
 Jinja2==3.0.2
 MarkupSafe==2.0.1
 PyYAML==6.0
+# TODO - Replace with a release when it comes out
+git+https://github.com/aisbergg/python-confmerge@06ec81b41043cc76d5fc60085daf3cfed2b610b1

@@ -14,6 +14,8 @@ function set-output() {
   else
     echo "[DEBUG] Output file not found, skipping outputs" >&2
   fi
+
+  rm -f "$TEMPFILE"
 }
 
 function render() {
@@ -30,7 +32,7 @@ function render() {
     return 1
   }
 
-  for var in Template Data Filters Tests Customize; do
+  for var in Template Filters Tests Customize; do
     VAR="${var^^}"
     val="${!VAR}"
     if [ -n "$val" ] && ! [ -f "$val" ]; then
@@ -47,8 +49,31 @@ function render() {
     return 3
   }
 
+  TEMPFILE="$(mktemp)"
+  export TEMPFILE
+
+  if [ -n "$DATA" ]; then
+    local data_files=()
+    while read -r file; do
+      [ -f "$file" ] || {
+        echo "[ERROR] Data file not found: $file" >&2
+        return 2
+      }
+      data_files+=("$file")
+    done <<< "$DATA"
+
+    if [ ${#data_files[@]} -gt 1 ]; then
+      DATA="$TEMPFILE"
+      echo "[DEBUG] Merging ${data_files[*]} to $DATA" >&2
+      confmerge "${data_files[@]}" "$DATA"
+    fi
+  fi
+
   # Main
   trap set-output EXIT
+
+  echo "[DEBUG] $(j2 --version)" >&2
+  echo "[DEBUG] $(confmerge --version)" >&2
 
   local COMMAND=(j2 -o "$OUTPUT")
 
@@ -77,7 +102,6 @@ function render() {
   COMMAND+=("$TEMPLATE")
   [ -z "$DATA" ] || COMMAND+=("$DATA")
 
-  which j2
   echo "[DEBUG] ${COMMAND[*]}" >&2
   "${COMMAND[@]}"
 }

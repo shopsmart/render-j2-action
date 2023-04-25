@@ -3,18 +3,32 @@
 # shellcheck source=../render.sh
 source "$BATS_TEST_DIRNAME/../src/render.sh"
 
+function j2() {
+  echo "$*" >> "$J2_CMD_FILE"
+  env >> "$J2_ENV_FILE"
+}
+
+function confmerge() {
+  echo "$*" >> "$CONFMERGE_CMD_FILE"
+}
+
+function mktemp() {
+  echo "$TEST_TEMPFILE"
+}
+
 function setup() {
   export J2_CMD_FILE="$BATS_TEST_TMPDIR/j2.cmd"
   export J2_ENV_FILE="$BATS_TEST_TMPDIR/j2.env"
 
-  # Inject a mock j2 cli
-  mkdir -p "$BATS_TEST_TMPDIR/bin"
-  {
-    echo 'echo "$*" > "'$J2_CMD_FILE'"'
-    echo 'env > "'$J2_ENV_FILE'"'
-  } > "$BATS_TEST_TMPDIR/bin/j2"
-  chmod +x "$BATS_TEST_TMPDIR/bin/j2"
-  export PATH="$BATS_TEST_TMPDIR/bin:$PATH"
+  export CONFMERGE_CMD_FILE="$BATS_TEST_TMPDIR/confmerge.cmd"
+
+  export TEST_TEMPFILE="$BATS_TEST_TMPDIR/tempfile"
+
+  # Use mock j2 and confmerge commands
+  export -f \
+    j2 \
+    confmerge \
+    mktemp
 
   # Template is required (per action.yml)
   TEMPLATE="$BATS_TEST_TMPDIR/template.j2"
@@ -140,4 +154,32 @@ function teardown() {
   grep -q -- "-e FOO" "$J2_CMD_FILE"
   grep -q -- "--undefined" "$J2_CMD_FILE"
   grep -qE "$TEMPLATE $DATA\$" "$J2_CMD_FILE"
+}
+
+@test "it should not call confmerge when there is a single data file" {
+  export DATA="$BATS_TEST_TMPDIR/data.yml"
+
+  touch "$DATA"
+
+  run render
+
+  [ "$status" -eq 0 ]
+  [ -f "$CONFMERGE_CMD_FILE" ] # --version is called on it
+  [ "$(< "$CONFMERGE_CMD_FILE")" = "--version" ]
+}
+
+@test "it should merge files when multiple data files are provided" {
+  DATA_FILE_1="$BATS_TEST_TMPDIR/data.yml"
+  DATA_FILE_2="$BATS_TEST_TMPDIR/secondary.yml"
+
+  export DATA="$DATA_FILE_1
+$DATA_FILE_2"
+
+  touch "$DATA_FILE_1"
+  touch "$DATA_FILE_2"
+
+  run render
+
+  grep -qE "$DATA_FILE_1 $DATA_FILE_2 $TEST_TEMPFILE\$" "$CONFMERGE_CMD_FILE"
+  grep -qE "$TEMPLATE $TEST_TEMPFILE\$" "$J2_CMD_FILE"
 }
