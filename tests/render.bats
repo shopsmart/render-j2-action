@@ -13,7 +13,8 @@ function confmerge() {
 }
 
 function mktemp() {
-  echo "$TEST_TEMPFILE"
+  mkdir -p "$TEST_TEMP_DIRECTORY"
+  echo "$TEST_TEMP_DIRECTORY"
 }
 
 function setup() {
@@ -22,7 +23,7 @@ function setup() {
 
   export CONFMERGE_CMD_FILE="$BATS_TEST_TMPDIR/confmerge.cmd"
 
-  export TEST_TEMPFILE="$BATS_TEST_TMPDIR/tempfile"
+  export TEST_TEMP_DIRECTORY="$BATS_TEST_TMPDIR/tmp"
 
   # Use mock j2 and confmerge commands
   export -f \
@@ -180,6 +181,6 @@ $DATA_FILE_2"
 
   run render
 
-  grep -qE "$DATA_FILE_1 $DATA_FILE_2 $TEST_TEMPFILE\$" "$CONFMERGE_CMD_FILE"
-  grep -qE "$TEMPLATE $TEST_TEMPFILE\$" "$J2_CMD_FILE"
+  grep -qE "$DATA_FILE_1 $DATA_FILE_2 $TEST_TEMP_DIRECTORY/data.yml\$" "$CONFMERGE_CMD_FILE"
+  grep -qE "$TEMPLATE $TEST_TEMP_DIRECTORY/data.yml\$" "$J2_CMD_FILE"
 }

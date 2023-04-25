@@ -15,7 +15,7 @@ function set-output() {
     echo "[DEBUG] Output file not found, skipping outputs" >&2
   fi
 
-  rm -f "$TEMPFILE"
+  rm -rf "$TEMP_DIRECTORY"
 }
 
 function render() {
@@ -46,8 +46,8 @@ function render() {
     return 3
   }
 
-  TEMPFILE="$(mktemp)"
-  export TEMPFILE
+  TEMP_DIRECTORY="$(mktemp -d)"
+  export TEMP_DIRECTORY
 
   if [ -n "$DATA" ]; then
     local ext=''
@@ -63,7 +63,7 @@ function render() {
     done <<< "$DATA"
 
     if [ ${#data_files[@]} -gt 1 ]; then
-      DATA="$TEMPFILE"
+      DATA="$TEMP_DIRECTORY/data.$ext"
       echo "[DEBUG] Merging ${data_files[*]} to $DATA" >&2
       confmerge "${data_files[@]}" "$DATA"
     fi
