@@ -50,9 +50,11 @@ function render() {
   export TEMPFILE
 
   if [ -n "$DATA" ]; then
+    local ext=''
     local data_files=()
     while read -r file; do
       [ -n "$file" ] || continue
+      [ -n "$ext"  ] || ext="${file##*.}"
       [ -f "$file" ] || {
         echo "[ERROR] Data file not found: $file" >&2
         return 2
