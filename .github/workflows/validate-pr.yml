@@ -57,6 +57,7 @@ jobs:
           output: actual.yml
           env_vars: |
             FOOBAR=baz
+          debug: true
 
       - name: 'Compare expected with actual'
         run: set -e; diff -yw actual.yml fixtures/expected.yml
