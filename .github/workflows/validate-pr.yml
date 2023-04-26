@@ -46,7 +46,9 @@ jobs:
       - uses: ./
         with:
           template: fixtures/template.yml.j2
-          data: fixtures/data.yml
+          data: |
+            fixtures/data.yml
+            fixtures/secondary.yml
           format: yaml
           undefined: 'true'
           customize: fixtures/customize.py

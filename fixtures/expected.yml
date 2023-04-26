@@ -6,3 +6,4 @@ bar: foo
 baz: baz
 foobar: foo
 empty: ""
+secondary: "foo"
