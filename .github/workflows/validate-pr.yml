@@ -32,7 +32,8 @@ jobs:
     name: 'Run tests'
     runs-on: ubuntu-latest
     steps:
-      - run: echo "/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin" >> $GITHUB_PATH
+      - name: 'Setup Homebrew'
+        uses: Homebrew/actions/setup-homebrew@master
       - uses: actions/checkout@v2
       - run: brew install bats-core
       - run: bats -r tests/*.bats
