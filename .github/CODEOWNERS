@@ -1,6 +1,0 @@
-# Everything must be approved through the techops team...for now
-*                     @shopsmart/tech-ops
-
-# Protect settings
-.github/settings.yml  @shopsmart/tech-ops
-.github/CODEOWNERS    @shopsmart/tech-ops
