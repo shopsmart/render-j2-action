@@ -1,0 +1,6 @@
+application: render-j2-action
+
+metadata:
+  team: techops
+  type: gh-action
+  language: bash
