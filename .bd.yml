@@ -1,7 +1,0 @@
----
-
-name: render-j2-action
-type: gh-action
-team: techops
-tags:
-  language: bash
