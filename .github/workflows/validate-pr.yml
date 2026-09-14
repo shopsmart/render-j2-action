@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Setup Homebrew'
-        uses: Homebrew/actions/setup-homebrew@master
+        uses: Homebrew/actions/setup-homebrew@2026.09.13.1
       - uses: actions/checkout@v2
       - run: brew install bats-core
       - run: bats -r tests/*.bats
