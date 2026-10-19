@@ -33,9 +33,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Setup Homebrew'
-        uses: Homebrew/actions/setup-homebrew@master
+        uses: shopsmart/bd-actions/setup-homebrew@feat/setup-homebrew
+        with:
+          packages: bats-core
       - uses: actions/checkout@v2
-      - run: brew install bats-core
       - run: bats -r tests/*.bats
 
   integration:
