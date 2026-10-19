@@ -1,5 +1,8 @@
 # Render J2 Templates
 
+> [!WARNING]
+> **This repository is end-of-life and will be archived on 2026-10-31.** This action is deprecated and will receive no further updates. Please migrate to [`shopsmart/bd-actions`](https://github.com/shopsmart/bd-actions). See [#18](https://github.com/shopsmart/render-j2-action/issues/18) for details.
+
 Renders Jinja2 Templates via the [J2 cli](https://github.com/kolypto/j2cli).
 
 ## Usage
